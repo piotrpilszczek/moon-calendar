@@ -25,7 +25,7 @@ window.handlePhases = () => {
     phases.calculate();
 
     resultContent.innerHTML = "<div>It will be " + phases.phase + "</div>";
-    document.getElementById('moonPhaseImage').src = "assets/images/" + phases.image;
+    document.getElementById('moonPhaseImage').src = "assets/images/" + phases.phase.replace(' ', '-') + '.png';
     resultContent.classList.remove('hidden');
     resultInfo.innerHTML = "Result:"
 }

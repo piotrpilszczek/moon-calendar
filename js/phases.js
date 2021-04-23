@@ -27,15 +27,4 @@ export default class Phases extends PhasesDTO {
         else if(this.daysIntoCycle >= 21.4 && this.daysIntoCycle < 22.6) return 'first quarter'
         else if(this.daysIntoCycle >= 22.6 && this.daysIntoCycle < 28.9) return 'waxing crescent'
     }
-
-    get image() {
-        if((this.daysIntoCycle >= 0 && this.daysIntoCycle <= 0.6) || (this.daysIntoCycle <= 29.5 && this.daysIntoCycle >= 28.9)) return 'new-moon.png'
-        else if(this.daysIntoCycle > 0.6 && this.daysIntoCycle < 6.4) return 'waning-crescent.png'
-        else if(this.daysIntoCycle >= 6.4 && this.daysIntoCycle < 7.6) return 'third-quarter.png'
-        else if(this.daysIntoCycle >= 7.6 && this.daysIntoCycle < 14.4) return 'waning-gibbous.png'
-        else if(this.daysIntoCycle >= 14.4 && this.daysIntoCycle < 15.6) return 'full-moon.png'
-        else if(this.daysIntoCycle >= 15.6 && this.daysIntoCycle < 21.4) return 'waxing-gibbous.png'
-        else if(this.daysIntoCycle >= 21.4 && this.daysIntoCycle < 22.6) return 'first-quarter.png'
-        else if(this.daysIntoCycle >= 22.6 && this.daysIntoCycle < 28.9) return 'waxing-crescent.png'
-    }
 }
