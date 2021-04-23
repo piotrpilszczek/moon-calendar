@@ -12,7 +12,7 @@ window.handlePhases = () => {
         .item(0);
 
     if(dateValue === null || dateValue === undefined || dateValue === '') {
-        resultInfo.innerHTML = "Wybierz datę!";
+        resultInfo.innerHTML = "Pick a date!";
         resultContent.classList.add('hidden');
         return;
     }
