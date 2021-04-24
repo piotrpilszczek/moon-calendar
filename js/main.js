@@ -12,7 +12,7 @@ window.handlePhases = () => {
         .item(0);
 
     if(dateValue === null || dateValue === undefined || dateValue === '') {
-        resultInfo.innerHTML = "Pick a date!";
+        resultInfo.innerHTML = "Pick a correct date!";
         resultContent.classList.add('hidden');
         return;
     }
@@ -20,6 +20,13 @@ window.handlePhases = () => {
     resultInfo.innerHTML = "Calculating..."
 
     const date = new Date(dateValue);
+
+    if(date.getUTCFullYear() < 2001) {
+        resultInfo.innerHTML = "Pick a date after 2001 year!";
+        resultContent.classList.add('hidden');
+        return;
+    }
+
     let phases = new Phases(date);
 
     phases.calculate();
