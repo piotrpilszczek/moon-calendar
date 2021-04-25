@@ -1,3 +1,5 @@
+Number.prototype.between = function(min, max) { return this >= min && this <= max };
+
 class PhasesDTO {
     date = new Date();
     jd = 0;
@@ -18,13 +20,27 @@ export default class Phases extends PhasesDTO {
     }
     
     get phase() {
-        if((this.daysIntoCycle >= 0 && this.daysIntoCycle <= 0.6) || (this.daysIntoCycle <= 29.5 && this.daysIntoCycle >= 28.9)) return 'new moon'
-        else if(this.daysIntoCycle > 0.6 && this.daysIntoCycle < 6.4) return 'waning crescent'
-        else if(this.daysIntoCycle >= 6.4 && this.daysIntoCycle < 7.6) return 'third quarter'
-        else if(this.daysIntoCycle >= 7.6 && this.daysIntoCycle < 14.4) return 'waning gibbous'
-        else if(this.daysIntoCycle >= 14.4 && this.daysIntoCycle < 15.6) return 'full moon'
-        else if(this.daysIntoCycle >= 15.6 && this.daysIntoCycle < 21.4) return 'waxing gibbous'
-        else if(this.daysIntoCycle >= 21.4 && this.daysIntoCycle < 22.6) return 'first quarter'
-        else if(this.daysIntoCycle >= 22.6 && this.daysIntoCycle < 28.9) return 'waxing crescent'
+        const ACCURACY = 0.6;
+        const phases = [
+            { scale: 0, phase: 'new moon' },
+            { scale: [ 0, 7 ], phase: 'waning crescent' },
+            { scale: 7, phase: 'third quarter' },
+            { scale: [ 7, 15 ], phase: 'waning gibbous' },
+            { scale: 15, phase: 'full moon' },
+            { scale: [ 15, 22 ], phase: 'waxing gibbous' },
+            { scale: 22, phase: 'first quarter' },
+            { scale: [ 22, 29.5 ], phase: 'waxing crescent' },
+            { scale: 29.5, phase: 'new moon' }
+        ]
+
+        let phase_ = '';
+
+        phases.forEach(phase => {
+            if(phase_ !== '') return;
+            if(Array.isArray(phase.scale) && this.daysIntoCycle.between(phase.scale[0] + ACCURACY, phase.scale[1] - ACCURACY)) phase_ = phase.phase;
+            else if(this.daysIntoCycle.between(phase.scale - ACCURACY, phase.scale + ACCURACY)) phase_ = phase.phase
+        });
+
+        return phase_;
     }
 }
