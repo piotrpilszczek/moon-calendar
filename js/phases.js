@@ -1,4 +1,4 @@
-Number.prototype.betweenWithAccuracy = function(min, max, acc) { return this >= min + acc && this <= max - acc };
+Number.prototype.between = function(min, max, acc = 0) { return this >= min + acc && this <= max - acc };
 
 class PhasesDTO {
     date = new Date();
@@ -38,10 +38,10 @@ export default class Phases extends PhasesDTO {
             phase_ =
                 phase_ === ''
                     ? Array.isArray(phase.scale)
-                        ? this.daysIntoCycle.betweenWithAccuracy(phase.scale[0], phase.scale[1], ACCURACY)
+                        ? this.daysIntoCycle.between(phase.scale[0], phase.scale[1], ACCURACY)
                             ? phase.phase
                             : ''
-                        : this.daysIntoCycle.betweenWithAccuracy(phase.scale, phase.scale, -ACCURACY)
+                        : this.daysIntoCycle.between(phase.scale, phase.scale, -ACCURACY)
                             ? phase.phase
                             : ''
                     : phase_);
