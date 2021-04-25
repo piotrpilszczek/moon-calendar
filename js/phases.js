@@ -18,7 +18,7 @@ export default class Phases extends PhasesDTO {
         const newMoonsFrac = (daySinceNew / MONTH) % 1;
         this.daysIntoCycle = Math.floor((MONTH - (newMoonsFrac * MONTH)) * 100) / 100;
     }
-    
+
     get phase() {
         const ACCURACY = 0.6;
         const phases = [
@@ -34,13 +34,17 @@ export default class Phases extends PhasesDTO {
         ]
 
         let phase_ = '';
-
-        phases.forEach(phase => {
-            if(phase_ !== '') return;
-            if(Array.isArray(phase.scale) && this.daysIntoCycle.between(phase.scale[0] + ACCURACY, phase.scale[1] - ACCURACY)) phase_ = phase.phase;
-            else if(this.daysIntoCycle.between(phase.scale - ACCURACY, phase.scale + ACCURACY)) phase_ = phase.phase
-        });
-
+        phases.forEach(phase =>
+            phase_ =
+                phase_ === ''
+                    ? Array.isArray(phase.scale)
+                        ? this.daysIntoCycle.between(phase.scale[0] + ACCURACY, phase.scale[1] - ACCURACY)
+                            ? phase.phase
+                            : ''
+                        : this.daysIntoCycle.between(phase.scale - ACCURACY, phase.scale + ACCURACY)
+                            ? phase.phase
+                            : ''
+                    : phase_);
         return phase_;
     }
 }
